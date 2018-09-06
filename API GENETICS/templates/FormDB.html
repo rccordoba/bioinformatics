@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>Genetica Molecular - UADE - PubMed</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="/static/styles/mainpage.css">
+        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ 
+    </head>
+    <body>
+<div class="container">
+        <div class="card text-black bg-dark" style="max-width: 50rem;">
+                <a href="index.html" class="btn btn-dark">Home</a>
+                <div class="card-header text-light"><b>UADE - Genetica Molecular - TXT Generator</b></div>
+                <div class="card-group">
+                    <div class="card">
+                            <div class="card-body">
+                            <h5 class="card-title">Search on PubMed's Database using your own Id's</h5>
+                            <form  action="" method="post" role="form">
+                                    {{ form.csrf }}
+                                    <div class="form-group">
+                                      <label for="name">Database:</label>
+                                      <select class="form-control" id="Database" name="Database">
+                                          <option value="nucleotide">Nucleotide</option>
+                                          <option value="pubmed">PubMed</option>
+                                          <option value="protein">Protein</option>
+                                          <option value="gene">Gene</option>
+                                          <option value="genome">Genome</option>
+                                      </select>
+                                      <br>
+                                      <label for="email">Ids:</label>
+                                      <input type="text" class="form-control" id="IdList" name="IdList" placeholder="Example: 1543134,1354674,135467">
+                                      <br>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark">Submit</button>
+                                  </form>
+                            </div>
+                    </div>
+
+</div>
+  <br>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+ 
+            {% if "Error" in message[1]: %}
+                <div class="alert alert-warning">
+                {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %} 
+
+<br>            
+</div>
+</div>
+</body>
+</html>
