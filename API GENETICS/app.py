@@ -44,7 +44,6 @@ def GeneticId():
     print (form.errors)
     if request.method == 'POST':
             patheto = easygui.filesavebox(default="genetics.txt")
-            time.sleep(5)
             Ids = StringToList(request.form['IdList'])
             GenerateTxt(Ids,request.form['Database'], patheto)
             flash('Txt Generated in the Path')
@@ -57,9 +56,11 @@ def ClustalSearch():
     form = DBQuery(request.form)
 
     if request.method == 'POST':
-        job = ClustalRequester(request.form['email'],request.form['title'],request.form['order'],request.form['dealign'],request.form['mbed'],request.form['mbediteration'],request.form['iterations'],request.form['hmmiterations'],request.form['outfmt'],request.form['path'])
+        job = ClustalRequester(request.form['email'],request.form['title'],request.form['order'],request.form['dealign'],request.form['mbed'],request.form['mbediteration'],request.form['iterations'],request.form['hmmiterations'],request.form['outfmt'],request.form['sequence'])
+        print(job)
         while (ClustalStatus(job)!='FINISHED'):
             print("Please wait a minute while is calculating")
+            time.sleep(15)
         typelists = ClustalObtainTypeResults(job)
         ClustalGetResults(job, typelists)
     return render_template("ClustalSearch.html", form=form)

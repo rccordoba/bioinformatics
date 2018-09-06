@@ -40,10 +40,7 @@ def StringToList(IdList):
     return Ids
 
 
-def ClustalRequester(email, title, order, dealign, mbed, mbediteration, iterations, hmmiterations, outfmt, path):
-    f = open(path, "r")
-    sequence = f.read()
-    f.close()
+def ClustalRequester(email, title, order, dealign, mbed, mbediteration, iterations, hmmiterations, outfmt, sequence):
     session = HTMLSession()
     data = {"email": email, "title": title, "order": order, "dealign": dealign, "mbed": mbed, "mbediteration": mbediteration, "iterations": iterations, "hmmiterations": hmmiterations, "outfmt": outfmt, "sequence": sequence}
     r = session.post('http://www.ebi.ac.uk/Tools/services/rest/clustalo/run/', data = data)
@@ -54,7 +51,9 @@ def ClustalRequester(email, title, order, dealign, mbed, mbediteration, iteratio
 def ClustalStatus(Job):
     session = HTMLSession()
     status = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/status/'+ Job)
-    return status.text
+    result = status.text
+    session.close()
+    return result
 
 def ClustalObtainTypeResults(Job):
     TypeList = []
@@ -67,22 +66,24 @@ def ClustalObtainTypeResults(Job):
     return TypeList
 
 def ClustalGetResults(Job, TypeList):
+    print(TypeList)
     for type in TypeList:
-        if (type == 'aln-clustal_num'):
+        if (type == 'aln-clustal'):
             session = HTMLSession()
-            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/clustalo-R20180905-161828-0880-70233707-p1m/'+ type)
+            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
             compare = r.text
             r.close()
             print(compare)
         if (type == 'phylotree'):
             session = HTMLSession()
-            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/clustalo-R20180905-161828-0880-70233707-p1m/'+ type)
+            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
+            print(r.text)
             tree = Phylo.read(StringIO(r.text), "newick")
             r.close()
             Phylo.draw(tree)
         if (type == 'pim'):
             session = HTMLSession()
-            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/clustalo-R20180905-161828-0880-70233707-p1m/'+ type)
+            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
             matrix = r.text
             r.close()
             print(matrix)
