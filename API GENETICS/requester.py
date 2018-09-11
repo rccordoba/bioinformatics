@@ -25,6 +25,9 @@ def GenerateTxt(IdList, database, path):
     f = open(path,"w+")
     if len(IdList)>1:
         for id in IdList:
+            if 'RNA' in id:
+                id = ObtainIds(database, id)
+                id = id[0]
             r = OpenSessionPubMed(id, database)
             f.write(r.text)
             CloseSession(r)
@@ -34,6 +37,7 @@ def GenerateTxt(IdList, database, path):
         f.write(r.text)
         CloseSession(r)
     f.close()
+
 
 def StringToList(IdList):
     Ids = IdList.split(',')
