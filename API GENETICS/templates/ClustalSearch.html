@@ -10,118 +10,205 @@
 
 </head>
 <body>
-    <div class="container">
-        <div class="card text-black bg-dark" style="max-width: 60rem;">
-            <a href="index.html" class="btn btn-dark">Home</a>
-            <div class="card-header text-light"><b>UADE - Genetica Molecular - ClustalW</b></div>
-            <div class="card-group">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Search on Clustal</h5>
-                        <form action="" method="post" role="form">
-                            {{ form.csrf }}
-                            <div class="form-group">
-                                <label for="name">Email: </label><b> (DONT FORGET)</b>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                <br>
-                                <label for="name">Title: </label><b> (Optional)</b>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Title of the job">
-                                <br>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Genetica Molecular - Secuencias - CrustalW</a>
+        </div>
+    </nav>
+        <div class="row" style="width:100%">
+            <div class="col-sm-12">
+			    <div class="container" style="margin-top:100px;">
+							<div class="row">
+								<div class="col-sm-4">
+									<label>Random mutation: </label>
+									<select id="random-mutation" class="form-control">
+										<option value="1">1 nucleotide</option>
+										<option value="10">10 nucleotides</option>
+										<option value="5">5x20 nucleotides</option>
+										<option value="100">100 nucleotides</option>
+									</select>
+								</div>
+								<div class="col-sm-8" id="random-mutation-div">
+								</div>
+							</div>
+							<br>
+                            <form action="" method="post" role="form">
+                                {{ form.csrf }}
                                 <div class="row">
-                                    <div class="col">
-                                        <label for="name">Order:</label>
-                                        <select class="form-control" id="order" name="order">
-                                            <option value="aligned">Aligned (default)</option>
-                                            <option value="input">Input</option>
-                                        </select>
-                                        <br>
-                                        <label for="name">Mbed:</label>
-                                        <select class="form-control" id="mbed" name="mbed">
-                                            <option value="true">True (default)</option>
-                                            <option value="false">False</option>
-                                        </select>
-                                        <br>
-                                        <label for="name">Combined Iterations:</label>
-                                        <select class="form-control" id="iterations" name="iterations">
-                                            <option value="0">0 (default)</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
+                                        <div class="col-sm-4">
+                                            <label for="name">Email: </label>
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="name">Title: </label><b> (Optional)</b>
+                                            <input type="text" class="form-control" id="title" name="title" placeholder="Title of the job">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="name">Outformat:</label>
+                                            <select class="form-control" id="outfmt" name="outfmt">
+                                                <option value="clustal">ClustalW (default)</option>
+                                                <option value="fa">Pearson/FASTA</option>
+                                                <option value="msf">MSF</option>
+                                                <option value="nexus">NEXUS</option>
+                                                <option value="phylip">PHYLIP</option>
+                                                <option value="selex">SELEX</option>
+                                                <option value="stockholm">STOCKHOLM</option>
+                                                <option value="vienna">VIENNA</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <label for="name">Dealign:</label>
-                                        <select class="form-control" id="dealign" name="dealign">
-                                            <option value="false">False (default)</option>
-                                            <option value="true">True</option>
-                                        </select>
-                                        <br>
-                                        <label for="name">Mbed Iteration:</label>
-                                        <select class="form-control" id="mbediteration" name="mbediteration">
-                                            <option value="true">True (default)</option>
-                                            <option value="false">False</option>
-                                        </select>
-                                        <br>
-                                        <label for="name">Max HMM Iterations:</label>
-                                        <select class="form-control" id="hmmiterations" name="hmmiterations">
-                                            <option value="0">0 (default)</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label for="name">Order:</label>
+                                            <select class="form-control" id="order" name="order">
+                                                <option value="aligned">Aligned (default)</option>
+                                                <option value="input">Input</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="name">Mbed:</label>
+                                            <select class="form-control" id="mbed" name="mbed">
+                                                <option value="true">True (default)</option>
+                                                <option value="false">False</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="name">Combined Iterations:</label>
+                                            <select class="form-control" id="iterations" name="iterations">
+                                                <option value="0">0 (default)</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <label for="name">Outformat:</label>
-                                <select class="form-control" id="outfmt" name="outfmt">
-                                    <option value="clustal">ClustalW (default)</option>
-                                    <option value="fa">Pearson/FASTA</option>
-                                    <option value="msf">MSF</option>
-                                    <option value="nexus">NEXUS</option>
-                                    <option value="phylip">PHYLIP</option>
-                                    <option value="selex">SELEX</option>
-                                    <option value="stockholm">STOCKHOLM</option>
-                                    <option value="vienna">VIENNA</option>
-                                </select>
-                                <br>
-                                <div class="form-group">
-                                    <label for="name">TXT FILE</label><b> (DONT FORGET)</b>
-                                    <textarea class="form-control-file" name= "sequence" id="sequence" rows="10"></textarea>
-                                </div>
-                            </div>
-                    </div>
-                    <button type="submit" class="btn btn-dark">Submit</button>
-                    </form>
-                </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label for="name">Dealign:</label>
+                                            <select class="form-control" id="dealign" name="dealign">
+                                                <option value="false">False (default)</option>
+                                                <option value="true">True</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="name">Mbed Iteration:</label>
+                                            <select class="form-control" id="mbediteration" name="mbediteration">
+                                                <option value="true">True (default)</option>
+                                                <option value="false">False</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="name">Max HMM Iterations:</label>
+                                            <select class="form-control" id="hmmiterations" name="hmmiterations">
+                                                <option value="0">0 (default)</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="name">TXT FILE</label>
+                                            <textarea class="form-control-file" name= "sequence" id="sequence" rows="20" style="resize:none;"></textarea>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-12" align="right">
+                                            <button class="btn btn-sm btn-success" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                        </form>
+            <br>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+
+            {% for message in messages %}
+            {% if "Error" not in message[1]: %}
+            <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
             </div>
+            {% endif %}
 
+            {% if "Error" in message[1]: %}
+            <div class="alert alert-warning">
+                {{ message[1] }}
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <br>
         </div>
-        <br>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-
-        {% for message in messages %}
-        {% if "Error" not in message[1]: %}
-        <div class="alert alert-info">
-            <strong>Success! </strong> {{ message[1] }}
-        </div>
-        {% endif %}
-
-        {% if "Error" in message[1]: %}
-        <div class="alert alert-warning">
-            {{ message[1] }}
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        <br>
     </div>
-    </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(function(){
+			$('#random-mutation').change(function(){
+				var randNuc = function(n) {
+					var text = "";
+					var possible = "ATCG";
+	
+					for (var i = 0; i < n; i++)
+						text += possible.charAt(Math.floor(Math.random() * possible.length));
+	
+					return text;
+				};
+				var res = '';
+				if ($(this).val() != 5)
+					res = '<input class="form-control" value="' + randNuc(+$(this).val()) + '" />';
+				else {
+					for (var i = 0; i < 5; i++) {
+						res += '<input class="form-control" value="' + randNuc(20) + '" /><br>'
+					}
+				}
+				$('#random-mutation-div').html(res);
+			});
+		});
+	</script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
