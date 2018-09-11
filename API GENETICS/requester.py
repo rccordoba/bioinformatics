@@ -29,7 +29,7 @@ def GetTaxName(id):
     for subchild in root.iter('Org-ref_taxname'):
         Idlist.append(subchild.text)
     r.close()
-    return Idlist[0]
+    return Idlist[0].replace(" ","")
 
 def GenerateTxt(IdList, database, path, taxonomy):
     f = open(path,"w+")

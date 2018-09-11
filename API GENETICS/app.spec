@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['app.py'],
-             pathex=['C:\\Users\\rcordoba\\Documents\\Python\\API genetics'],
+             pathex=['C:\\Users\\rcordoba\\Documents\\Python\\bioinformatics\\API GENETICS'],
              binaries=[],
              datas=[],
              hiddenimports=[],
