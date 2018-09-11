@@ -34,38 +34,40 @@
                                 <label for="email">Ids:</label>
                                 <input type="text" class="form-control" id="IdList" name="IdList" placeholder="Example: 1543134,1354674,135467">
                                 <br>
-                                <label class="form-check-inline" for="name">Taxonomy: </label>
-                                <input class="form-check-input-inline" type="checkbox" data-toggle="tooltip"
-                                    data-placement="top" title="Replaces names for Taxonomy Names" id="taxonomy" name="taxonomy" value="true">
+                                <label for="name">Taxonomy:</label>
+                                <select class="form-control" id="taxonomy" name="taxonomy">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
                             </div>
                     </div>
                     <button type="submit" class="btn btn-dark">Submit</button>
                     </form>
                 </div>
             </div>
-
         </div>
-        <br>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
+    </div>
+    <br>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
 
-        {% for message in messages %}
-        {% if "Error" not in message[1]: %}
-        <div class="alert alert-info">
-            <strong>Success! </strong> {{ message[1] }}
-        </div>
-        {% endif %}
+    {% for message in messages %}
+    {% if "Error" not in message[1]: %}
+    <div class="alert alert-info">
+        <strong>Success! </strong> {{ message[1] }}
+    </div>
+    {% endif %}
 
-        {% if "Error" in message[1]: %}
-        <div class="alert alert-warning">
-            {{ message[1] }}
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+    {% if "Error" in message[1]: %}
+    <div class="alert alert-warning">
+        {{ message[1] }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
-        <br>
+    <br>
     </div>
     </div>
 </body>

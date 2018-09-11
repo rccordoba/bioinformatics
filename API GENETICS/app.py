@@ -31,8 +31,9 @@ def GeneticRequester():
     if request.method == 'POST':
             path = easygui.filesavebox(default="genetics.txt")
             if form.validate():
+                taxonomy = 'false'
                 Ids = ObtainIds(request.form['Database'], request.form['term'])
-                GenerateTxt(Ids,request.form['Database'], path, request.form['taxonomy'])
+                GenerateTxt(Ids,request.form['Database'], path, taxonomy)
                 flash('Txt Generated in the Path')
             else:
                 flash('Error! Database is required')
@@ -44,9 +45,10 @@ def GeneticId():
     form = DBQuery(request.form)
     print (form.errors)
     if request.method == 'POST':
+            taxonomy = request.form['taxonomy']
             patheto = easygui.filesavebox(default="genetics.txt")
             Ids = StringToList(request.form['IdList'])
-            GenerateTxt(Ids,request.form['Database'], patheto, request.form['taxonomy'])
+            GenerateTxt(Ids,request.form['Database'], patheto, taxonomy)
             flash('Txt Generated in the Path')
     return render_template('FormDB.html', form=form)
 
