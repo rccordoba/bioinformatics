@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-from requester import ObtainIds, GenerateTxt, StringToList, ClustalRequester, ClustalGetResults, ClustalObtainTypeResults, ClustalStatus
+from requester import ObtainIds, GenerateTxt, StringToList, ClustalRequester, ClustalGetResults, ClustalObtainTypeResults, ClustalStatus, ClustalPhylotree
 import easygui
 import webbrowser
 import time
@@ -55,7 +55,7 @@ def GeneticId():
 
 def ClustalSearch():
     form = DBQuery(request.form)
-
+    comparelist = []
     if request.method == 'POST':
         job = ClustalRequester(request.form['email'],request.form['title'],request.form['order'],request.form['dealign'],request.form['mbed'],request.form['mbediteration'],request.form['iterations'],request.form['hmmiterations'],request.form['outfmt'],request.form['sequence'])
         print(job)
@@ -63,7 +63,12 @@ def ClustalSearch():
             print("Please wait a minute while is calculating")
             time.sleep(15)
         typelists = ClustalObtainTypeResults(job)
-        ClustalGetResults(job, typelists)
+        for type in typelists:
+            if (type == 'phylotree'):
+                ClustalPhylotree(job)
+            if (type == 'aln-clustal'):
+                comparelist.append(ClustalGetResults(job,type))
+        return render_template("ClustalResults.html", compare = comparelist, i = 0)
     return render_template("ClustalSearch.html", form=form)
 
 if __name__ == "__main__":

@@ -99,25 +99,16 @@ def ClustalObtainTypeResults(Job):
     r.close()
     return TypeList
 
-def ClustalGetResults(Job, TypeList):
-    print(TypeList)
-    for type in TypeList:
-        if (type == 'aln-clustal'):
-            session = HTMLSession()
-            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
-            compare = r.text
-            r.close()
-            print(compare)
-        if (type == 'phylotree'):
-            session = HTMLSession()
-            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
-            print(r.text)
-            tree = Phylo.read(StringIO(r.text), "newick")
-            r.close()
-            Phylo.draw(tree)
-        if (type == 'pim'):
-            session = HTMLSession()
-            r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
-            matrix = r.text
-            r.close()
-            print(matrix)
+def ClustalGetResults(Job, type):
+        session = HTMLSession()
+        r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/'+ type)
+        matrix = r.text
+        r.close()
+        return matrix
+
+def ClustalPhylotree(Job):
+    session = HTMLSession()
+    r = session.get('http://www.ebi.ac.uk/Tools/services/rest/clustalo/result/'+ Job +'/phylotree' )
+    tree = Phylo.read(StringIO(r.text), "newick")
+    r.close()
+    Phylo.draw(tree)
