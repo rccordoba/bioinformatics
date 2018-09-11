@@ -16,6 +16,7 @@ class DBQuery(Form):
     Database = TextField('Database:', validators=[validators.required()])
     term = TextField('Query: ')
     IdList = TextField('Ids: ')
+    Taxonomy = TextField('Taxonomy: ')
 
 @app.route("/index.html")
 @app.route("/")
@@ -31,7 +32,7 @@ def GeneticRequester():
             path = easygui.filesavebox(default="genetics.txt")
             if form.validate():
                 Ids = ObtainIds(request.form['Database'], request.form['term'])
-                GenerateTxt(Ids,request.form['Database'], path)
+                GenerateTxt(Ids,request.form['Database'], path, request.form['taxonomy'])
                 flash('Txt Generated in the Path')
             else:
                 flash('Error! Database is required')
@@ -45,7 +46,7 @@ def GeneticId():
     if request.method == 'POST':
             patheto = easygui.filesavebox(default="genetics.txt")
             Ids = StringToList(request.form['IdList'])
-            GenerateTxt(Ids,request.form['Database'], patheto)
+            GenerateTxt(Ids,request.form['Database'], patheto, request.form['taxonomy'])
             flash('Txt Generated in the Path')
     return render_template('FormDB.html', form=form)
 

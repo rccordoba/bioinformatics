@@ -21,7 +21,17 @@ def OpenSessionPubMed(id, database):
 def CloseSession(r):
     r.close()
 
-def GenerateTxt(IdList, database, path):
+def GetTaxName(id):
+    Idlist = []
+    session = HTMLSession()
+    r = session.get('https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id='+id+'&rettype=html')
+    root = ET.fromstring(r.content)
+    for subchild in root.iter('Org-ref_taxname'):
+        Idlist.append(subchild.text)
+    r.close()
+    return Idlist[0]
+
+def GenerateTxt(IdList, database, path, taxonomy):
     f = open(path,"w+")
     if len(IdList)>1:
         for id in IdList:
@@ -29,12 +39,32 @@ def GenerateTxt(IdList, database, path):
                 id = ObtainIds(database, id)
                 id = id[0]
             r = OpenSessionPubMed(id, database)
-            f.write(r.text)
+            if (taxonomy=="true"):
+                i = 0
+                while (r.text[i]!='\n'):
+                    i = i+1
+                taxname = ">" + GetTaxName(id) + "\n"
+                f.write(taxname)
+                i = i+1
+                while(i< len(r.text)):
+                    f.write(r.text[i])
+                    i = i+1
+            else:
+                f.write(r.text)
             CloseSession(r)
     else:
         id = IdList[0]
         r = OpenSessionPubMed(id, database)
-        f.write(r.text)
+        if (taxonomy=="true"):
+            i = 0
+            while (r.text[i]!='\n'):
+                i = i+1
+            taxname = ">" + GetTaxName(id) + "\n"
+            f.write(taxname)
+            i = i+1
+            while(i< len(r.text)):
+                f.write(r.text[i])
+                i = i+1
         CloseSession(r)
     f.close()
 
