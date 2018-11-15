@@ -68,9 +68,11 @@ def ClustalSearch():
         for type in typelists:
             if (type == 'phylotree'):
                 ClustalPhylotree(job)
-            if (type == 'aln-clustal'):
-                comparelist.append(ClustalGetResults(job,type))
-        return render_template("ClustalResults.html", compare = comparelist, i = 0)
+            if (type == 'aln-clustal' or type=='pim'):
+                result = ClustalGetResults(job,type)
+                comparelist.append(result)
+        
+        return render_template("ClustalResults.html", compare = comparelist)
     return render_template("ClustalSearch.html", form=form)
 
 if __name__ == "__main__":
